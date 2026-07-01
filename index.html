@@ -496,7 +496,7 @@
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
 
@@ -698,6 +698,7 @@
     .control-panel,
     .quick-card,
     .palette-card,
+    .react-bits-card,
     .skill-style-card,
     .filter-status,
     .replay-all,
@@ -938,6 +939,7 @@
     .quick-card:nth-child(4) { background: linear-gradient(135deg, rgba(220, 240, 255, 0.5), rgba(255, 255, 255, 0.55)); }
 
     .palette-wall,
+    .react-bits-wall,
     .visual-skill-wall {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -945,6 +947,7 @@
     }
 
     .palette-card,
+    .react-bits-card,
     .skill-style-card {
       padding: 12px;
       border: 1px solid rgba(255, 255, 255, 0.72);
@@ -958,6 +961,7 @@
     }
 
     .palette-name,
+    .react-bits-name,
     .style-name {
       display: flex;
       justify-content: space-between;
@@ -975,6 +979,38 @@
       font-family: var(--mono);
       font-size: 10px;
       background: #f4f7ef;
+    }
+
+    .react-bits-name span:first-child {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .react-bits-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+
+    .react-bits-list span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 4px 7px;
+      border: 1px solid rgba(126, 173, 215, 0.26);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.46);
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1;
+    }
+
+    .react-bits-source {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
     }
 
     .swatches {
@@ -2020,6 +2056,547 @@
       font-weight: 800;
     }
 
+    /* Demo: React Bits text pressure */
+    .rb-text-pressure-demo,
+    .rb-true-focus-demo,
+    .rb-proximity-demo {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: #1E3448;
+      color: #f8faf2;
+      text-align: center;
+    }
+
+    .rb-pressure-word {
+      display: flex;
+      justify-content: center;
+      gap: 2px;
+      font-size: 42px;
+      line-height: 0.92;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .rb-pressure-word span {
+      display: inline-block;
+      min-width: 0.62em;
+      transform: scaleY(0.76);
+      color: var(--lime);
+    }
+
+    .demo-stage.is-running .rb-pressure-word span {
+      animation: rb-pressure 1400ms cubic-bezier(.22, 1, .36, 1) infinite alternate;
+      animation-delay: calc(var(--i) * 75ms);
+    }
+
+    @keyframes rb-pressure {
+      0% { transform: translateY(8px) scaleY(0.66) scaleX(1.04); color: var(--lime); }
+      52% { transform: translateY(-9px) scaleY(1.2) scaleX(0.92); color: #fff; }
+      100% { transform: translateY(0) scaleY(0.9) scaleX(1); color: var(--cyan); }
+    }
+
+    /* Demo: React Bits true focus */
+    .rb-focus-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      max-width: 380px;
+    }
+
+    .rb-focus-word {
+      position: relative;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      color: rgba(248, 250, 242, 0.48);
+      font-weight: 900;
+    }
+
+    .rb-focus-word::before,
+    .rb-focus-word::after {
+      content: "";
+      position: absolute;
+      inset: -5px;
+      border: 2px solid var(--lime);
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .rb-focus-word::after {
+      inset: -9px;
+      border-color: rgba(142, 220, 232, 0.26);
+    }
+
+    .demo-stage.is-running .rb-focus-word {
+      animation: rb-focus-text 2400ms ease infinite;
+      animation-delay: calc(var(--i) * 520ms);
+    }
+
+    .demo-stage.is-running .rb-focus-word::before,
+    .demo-stage.is-running .rb-focus-word::after {
+      animation: rb-focus-ring 2400ms ease infinite;
+      animation-delay: calc(var(--i) * 520ms);
+    }
+
+    @keyframes rb-focus-text {
+      0%, 100% { color: rgba(248, 250, 242, 0.48); }
+      18%, 42% { color: #fff; text-shadow: 0 0 18px rgba(142, 220, 232, 0.5); }
+    }
+
+    @keyframes rb-focus-ring {
+      0%, 52%, 100% { opacity: 0; transform: scale(0.96); }
+      18%, 42% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Demo: React Bits variable proximity */
+    .rb-proximity-line {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      max-width: 380px;
+      font-size: 34px;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .rb-proximity-line span {
+      display: inline-block;
+      color: rgba(248, 250, 242, 0.46);
+      transform: translateY(8px) scale(0.94);
+    }
+
+    .demo-stage.is-running .rb-proximity-line span {
+      animation: rb-proximity 1800ms ease infinite;
+      animation-delay: calc(var(--i) * 52ms);
+    }
+
+    @keyframes rb-proximity {
+      0%, 100% { color: rgba(248, 250, 242, 0.46); transform: translateY(8px) scale(0.94); }
+      44%, 60% { color: var(--lime); transform: translateY(-6px) scale(1.16); }
+    }
+
+    /* Demo: React Bits aurora */
+    .rb-aurora-demo,
+    .rb-liquid-chrome-demo,
+    .rb-hyperspeed-demo {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      background: #071626;
+    }
+
+    .rb-aurora-ribbon {
+      position: absolute;
+      inset: -34% -18%;
+      background:
+        radial-gradient(ellipse at 16% 28%, rgba(76, 201, 240, 0.68), transparent 36%),
+        radial-gradient(ellipse at 58% 36%, rgba(188, 130, 255, 0.48), transparent 34%),
+        radial-gradient(ellipse at 78% 66%, rgba(142, 220, 232, 0.58), transparent 38%),
+        linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 46%);
+      filter: blur(18px) saturate(1.32);
+      opacity: 0.9;
+      transform: rotate(-9deg);
+    }
+
+    .demo-stage.is-running .rb-aurora-ribbon {
+      animation: rb-aurora 3600ms ease-in-out infinite alternate;
+    }
+
+    @keyframes rb-aurora {
+      from { transform: translateX(-5%) rotate(-10deg) scale(1.02); }
+      to { transform: translateX(5%) rotate(5deg) scale(1.12); }
+    }
+
+    /* Demo: React Bits liquid chrome */
+    .rb-chrome-blob {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 190px;
+      height: 190px;
+      border-radius: 42% 58% 52% 48%;
+      background:
+        radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.96), transparent 16%),
+        conic-gradient(from 90deg, #f8faf2, #8edce8, #304c89, #eaa4ba, #f8faf2);
+      box-shadow:
+        inset 16px 18px 32px rgba(255, 255, 255, 0.56),
+        inset -20px -24px 34px rgba(5, 18, 31, 0.36),
+        0 28px 64px rgba(126, 195, 243, 0.28);
+      transform: translate(-50%, -50%);
+    }
+
+    .demo-stage.is-running .rb-chrome-blob {
+      animation: rb-chrome 2600ms cubic-bezier(.65, 0, .35, 1) infinite alternate;
+    }
+
+    @keyframes rb-chrome {
+      0% { border-radius: 42% 58% 52% 48%; transform: translate(-50%, -50%) rotate(0deg) scale(0.94); }
+      100% { border-radius: 58% 42% 39% 61%; transform: translate(-50%, -50%) rotate(16deg) scale(1.08); }
+    }
+
+    /* Demo: React Bits hyperspeed */
+    .rb-speed-road {
+      position: absolute;
+      inset: 0;
+      perspective: 240px;
+      background:
+        radial-gradient(ellipse at 50% 35%, rgba(142, 220, 232, 0.26), transparent 35%),
+        linear-gradient(#061523, #142a42);
+    }
+
+    .rb-speed-road::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -10%;
+      width: 70%;
+      height: 78%;
+      background:
+        linear-gradient(90deg, transparent 0 12%, rgba(142, 220, 232, 0.45) 12% 13%, transparent 13% 49%, rgba(255, 255, 255, 0.82) 49% 51%, transparent 51% 87%, rgba(142, 220, 232, 0.45) 87% 88%, transparent 88%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.18) 0 2px, transparent 2px 22px);
+      transform: translateX(-50%) rotateX(66deg);
+      transform-origin: bottom center;
+    }
+
+    .rb-speed-beam {
+      position: absolute;
+      top: 50%;
+      width: 44%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--lime), transparent);
+      opacity: 0;
+    }
+
+    .rb-speed-beam:nth-child(2) { left: -8%; top: 38%; transform: rotate(10deg); }
+    .rb-speed-beam:nth-child(3) { right: -8%; top: 58%; transform: rotate(-12deg); }
+    .rb-speed-beam:nth-child(4) { left: 12%; top: 72%; transform: rotate(4deg); }
+
+    .demo-stage.is-running .rb-speed-beam {
+      animation: rb-speed-beam 900ms ease-in-out infinite;
+      animation-delay: calc(var(--i) * 180ms);
+    }
+
+    @keyframes rb-speed-beam {
+      0% { opacity: 0; transform: translateX(-18px) scaleX(0.45); }
+      40% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(90px) scaleX(1.5); }
+    }
+
+    /* Demo: React Bits magnet */
+    .rb-magnet-demo {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: #f4fbff;
+    }
+
+    .rb-magnet-field {
+      position: relative;
+      width: min(100%, 340px);
+      min-height: 162px;
+      border: 2px dashed rgba(14, 43, 78, 0.34);
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .rb-magnet-field::before {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      border: 1px solid rgba(78, 164, 221, 0.26);
+      box-shadow: 0 0 0 36px rgba(78, 164, 221, 0.08), 0 0 0 74px rgba(78, 164, 221, 0.04);
+    }
+
+    .rb-magnet-target {
+      position: relative;
+      z-index: 1;
+      width: 112px;
+      height: 72px;
+      border: 3px solid var(--ink);
+      border-radius: 16px;
+      background: var(--lime);
+      box-shadow: 7px 7px 0 rgba(14, 43, 78, 0.18);
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-weight: 900;
+      transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+      transition: transform 180ms ease;
+      will-change: transform;
+    }
+
+    .demo-stage.is-running .rb-magnet-target {
+      animation: rb-magnet-idle 1700ms ease-in-out infinite alternate;
+    }
+
+    @keyframes rb-magnet-idle {
+      from { box-shadow: 7px 7px 0 rgba(14, 43, 78, 0.18); }
+      to { box-shadow: 12px 12px 0 rgba(14, 43, 78, 0.12); }
+    }
+
+    /* Demo: React Bits glare hover */
+    .rb-glare-demo {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: #13283c;
+    }
+
+    .rb-glare-card {
+      position: relative;
+      width: min(100%, 300px);
+      min-height: 154px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.24), transparent 34%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(142, 220, 232, 0.16));
+      color: #fff;
+      padding: 20px;
+    }
+
+    .rb-glare-card::before {
+      content: "";
+      position: absolute;
+      inset: -40% auto -40% -70%;
+      width: 56%;
+      background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+      transform: rotate(16deg);
+    }
+
+    .rb-glare-card strong {
+      position: relative;
+      z-index: 1;
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .rb-glare-card span {
+      position: relative;
+      z-index: 1;
+      display: block;
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.72);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .demo-stage.is-running .rb-glare-card::before,
+    .rb-glare-card:hover::before {
+      animation: rb-glare 1400ms ease forwards;
+    }
+
+    @keyframes rb-glare {
+      to { left: 118%; }
+    }
+
+    /* Demo: React Bits pixel trail */
+    .rb-pixel-trail-demo {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: #eef8ff;
+    }
+
+    .rb-pixel-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 24px);
+      gap: 6px;
+      padding: 16px;
+      border: 2px solid rgba(14, 43, 78, 0.16);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .rb-pixel-grid span {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(78, 164, 221, 0.14);
+    }
+
+    .demo-stage.is-running .rb-pixel-grid span {
+      animation: rb-pixel 1800ms ease infinite;
+      animation-delay: calc(var(--i) * 36ms);
+    }
+
+    @keyframes rb-pixel {
+      0%, 100% { background: rgba(78, 164, 221, 0.14); transform: scale(1); }
+      35%, 58% { background: var(--rose); transform: scale(1.18); }
+    }
+
+    /* Demo: React Bits magic bento */
+    .rb-bento-demo {
+      height: 100%;
+      display: grid;
+      align-content: center;
+      padding: 16px;
+      background: #101a28;
+    }
+
+    .rb-bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .rb-bento-cell {
+      position: relative;
+      min-height: 70px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at var(--gx, 20%) var(--gy, 20%), rgba(142, 220, 232, 0.3), transparent 42%),
+        rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .rb-bento-cell::before {
+      content: "";
+      position: absolute;
+      inset: auto 12px 12px 12px;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .rb-bento-cell:nth-child(1),
+    .rb-bento-cell:nth-child(5) {
+      grid-row: span 2;
+      min-height: 148px;
+    }
+
+    .rb-bento-cell:nth-child(2n) { --gx: 80%; --gy: 30%; }
+    .rb-bento-cell:nth-child(3n) { --gx: 40%; --gy: 80%; }
+
+    .demo-stage.is-running .rb-bento-cell {
+      animation: rb-bento 1800ms ease-in-out infinite alternate;
+      animation-delay: calc(var(--i) * 90ms);
+    }
+
+    @keyframes rb-bento {
+      to { transform: translateY(-5px); border-color: rgba(142, 220, 232, 0.34); }
+    }
+
+    /* Demo: React Bits dock */
+    .rb-dock-demo {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: #edf8ff;
+    }
+
+    .rb-dock {
+      display: flex;
+      align-items: end;
+      gap: 8px;
+      min-height: 98px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.74);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.54);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 18px 42px rgba(78, 164, 221, 0.14);
+    }
+
+    .rb-dock span {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: 2px solid var(--ink);
+      border-radius: 15px;
+      background: var(--mint);
+      font-weight: 900;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .rb-dock span:hover {
+      transform: translateY(-16px) scale(1.22);
+      background: var(--lime);
+    }
+
+    .demo-stage.is-running .rb-dock span {
+      animation: rb-dock-wave 1400ms ease-in-out infinite;
+      animation-delay: calc(var(--i) * 90ms);
+    }
+
+    @keyframes rb-dock-wave {
+      0%, 100% { transform: translateY(0) scale(1); }
+      45% { transform: translateY(-14px) scale(1.2); }
+    }
+
+    /* Demo: React Bits scroll stack */
+    .rb-stack-demo {
+      position: relative;
+      height: 100%;
+      padding: 18px;
+      display: grid;
+      place-items: center;
+      background: #f5fbff;
+    }
+
+    .rb-stack {
+      position: relative;
+      width: min(100%, 300px);
+      height: 174px;
+    }
+
+    .rb-stack-card {
+      position: absolute;
+      inset: 0;
+      padding: 16px;
+      border: 3px solid var(--ink);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 18px 38px rgba(14, 43, 78, 0.1);
+      transform: translateY(calc(var(--i) * 16px)) scale(calc(1 - var(--i) * 0.045));
+      transform-origin: top center;
+    }
+
+    .rb-stack-card:nth-child(1) { background: var(--lime); }
+    .rb-stack-card:nth-child(2) { background: var(--mint); }
+    .rb-stack-card:nth-child(3) { background: var(--rose); }
+    .rb-stack-card:nth-child(4) { background: #fff; }
+
+    .rb-stack-card strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .rb-stack-card span {
+      display: block;
+      margin-top: 10px;
+      color: #31516F;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .demo-stage.is-running .rb-stack-card {
+      animation: rb-stack 2600ms ease-in-out infinite;
+      animation-delay: calc(var(--i) * 150ms);
+    }
+
+    @keyframes rb-stack {
+      0%, 100% { transform: translateY(calc(var(--i) * 16px)) scale(calc(1 - var(--i) * 0.045)); }
+      48%, 62% { transform: translateY(calc(var(--i) * 6px - 12px)) scale(calc(1 - var(--i) * 0.02)); }
+    }
+
     /* Demo: style switch */
     .style-switch-demo {
       height: 100%;
@@ -2143,6 +2720,7 @@
 
       .quick-board,
       .palette-wall,
+      .react-bits-wall,
       .visual-skill-wall {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -2174,6 +2752,7 @@
       .stats-grid,
       .quick-board,
       .palette-wall,
+      .react-bits-wall,
       .visual-skill-wall {
         grid-template-columns: 1fr;
       }
@@ -2300,6 +2879,7 @@
         <button class="filter-btn" type="button" data-filter="timeline" aria-pressed="false"><span>Timeline</span><span class="filter-count" data-count="timeline">0</span></button>
         <button class="filter-btn" type="button" data-filter="scroll" aria-pressed="false"><span>ScrollTrigger</span><span class="filter-count" data-count="scroll">0</span></button>
         <button class="filter-btn" type="button" data-filter="plugin" aria-pressed="false"><span>Plugins</span><span class="filter-count" data-count="plugin">0</span></button>
+        <button class="filter-btn" type="button" data-filter="reactbits" aria-pressed="false"><span>React Bits</span><span class="filter-count" data-count="reactbits">0</span></button>
         <button class="filter-btn" type="button" data-filter="deck" aria-pressed="false"><span>Slides / Video</span><span class="filter-count" data-count="deck">0</span></button>
         <button class="filter-btn" type="button" data-filter="style" aria-pressed="false"><span>视觉风格</span><span class="filter-count" data-count="style">0</span></button>
         <button class="filter-btn" type="button" data-filter="editable" aria-pressed="false"><span>可编辑 HTML</span><span class="filter-count" data-count="editable">0</span></button>
@@ -2321,11 +2901,12 @@
         <div class="control-panel">
           <label class="search-wrap">
             <span class="field-label">Search by skill, effect, prompt</span>
-            <input class="search-input" id="searchInput" type="search" placeholder="搜索：FLIP / 拆字 / 滚动 / 飞书 / Magic Move">
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索：FLIP / Aurora / Magnet / Bento / 飞书 / Magic Move">
           </label>
           <div class="stats-grid">
             <div class="stat"><strong id="visibleCount">0</strong><span>当前可见</span></div>
             <div class="stat"><strong id="demoTotal">0</strong><span>动效示范</span></div>
+            <div class="stat"><strong id="reactBitsTotal">134</strong><span>React Bits</span></div>
             <div class="stat"><strong>24</strong><span>飞书色票</span></div>
           </div>
         </div>
@@ -2366,7 +2947,7 @@
           </div>
           <button class="replay-all" id="replayAll" type="button">重播全部</button>
         </div>
-        <div class="filter-status" id="filterStatus">当前显示：全部 17 个动效示范</div>
+        <div class="filter-status" id="filterStatus">当前显示：全部 29 个动效示范</div>
         <div class="atlas-grid" id="atlasGrid"></div>
         <div class="empty-state" id="emptyState">没有匹配的动效。换个关键词试试，比如 “timeline”、“拖拽”、“文字”。</div>
       </section>
@@ -2379,6 +2960,16 @@
           </div>
         </div>
         <div class="visual-skill-wall" id="visualSkillWall"></div>
+      </section>
+
+      <section class="section" aria-labelledby="react-bits-title">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title" id="react-bits-title">React Bits 资源索引</h2>
+            <p class="section-subtitle">来自 DavidHDev/react-bits 的公开组件库。这里按官方四类保留完整名字，真正生成项目时可点上方 React Bits 筛选先看代表模式，再复制提示词。</p>
+          </div>
+        </div>
+        <div class="react-bits-wall" id="reactBitsWall"></div>
       </section>
 
       <section class="section" aria-labelledby="palette-title">
@@ -2625,6 +3216,161 @@
           </div>`
       },
       {
+        id: "rb-text-pressure",
+        category: "reactbits",
+        skill: "React Bits / TextAnimations",
+        tags: ["react bits", "textpressure", "variable font", "标题", "字重"],
+        title: "TextPressure 可压缩标题",
+        signature: "字形像被压力拉伸和压缩，适合强视觉封面、产品发布标题、海报式 hero。识别点是文字本身在变形，而不是普通位移。",
+        prompt: "参考 React Bits 的 TextPressure，做一个可变字重/纵向压缩的主标题动画；保持中文不乱断，动效只用于短标题。",
+        demo: `
+          <div class="rb-text-pressure-demo">
+            <div class="rb-pressure-word">${Array.from("PRESSURE", (char, i) => `<span style="--i:${i}">${char}</span>`).join("")}</div>
+          </div>`
+      },
+      {
+        id: "rb-true-focus",
+        category: "reactbits",
+        skill: "React Bits / TextAnimations",
+        tags: ["react bits", "truefocus", "focus", "关键词", "高亮"],
+        title: "TrueFocus 关键词锁定",
+        signature: "焦点框逐个锁定关键词，适合 slogan、流程阶段、训练重点。比普通高亮更像“镜头正在对焦”。",
+        prompt: "参考 React Bits 的 TrueFocus，让一句标题中的关键词依次获得焦点框和发光高亮，节奏克制，支持移动端换行。",
+        demo: `
+          <div class="rb-true-focus-demo">
+            <div class="rb-focus-row">${["Frame", "Focus", "Signal"].map((word, i) => `<span class="rb-focus-word" style="--i:${i}">${word}</span>`).join("")}</div>
+          </div>`
+      },
+      {
+        id: "rb-variable-proximity",
+        category: "reactbits",
+        skill: "React Bits / TextAnimations",
+        tags: ["react bits", "variableproximity", "mouse", "距离", "文字"],
+        title: "VariableProximity 距离响应字",
+        signature: "鼠标靠近文字时，附近字符变粗、放大或变亮。适合交互型标题、导航、创意首页的轻探索感。",
+        prompt: "参考 React Bits 的 VariableProximity，做鼠标靠近时字符字重和亮度变化的标题；没有鼠标时自动播放一轮预览。",
+        demo: `
+          <div class="rb-proximity-demo">
+            <div class="rb-proximity-line">${Array.from("PROXIMITY", (char, i) => `<span style="--i:${i}">${char}</span>`).join("")}</div>
+          </div>`
+      },
+      {
+        id: "rb-aurora",
+        category: "reactbits",
+        skill: "React Bits / Backgrounds",
+        tags: ["react bits", "aurora", "background", "渐变", "背景"],
+        title: "Aurora 极光背景",
+        signature: "多层柔光带缓慢漂移，适合开场、品牌背景、科技感但不想做粒子海的页面。识别点是大面积流动色带。",
+        prompt: "参考 React Bits 的 Aurora，做一层慢速流动极光背景；正文保持高对比，提供 reduced-motion 降级。",
+        demo: `<div class="rb-aurora-demo"><div class="rb-aurora-ribbon"></div></div>`
+      },
+      {
+        id: "rb-liquid-chrome",
+        category: "reactbits",
+        skill: "React Bits / Backgrounds",
+        tags: ["react bits", "liquidchrome", "chrome", "液态", "金属"],
+        title: "LiquidChrome 液态金属",
+        signature: "高光和暗部像金属液体一样流动，适合高端视觉、设备发布、AI/硬件概念图。不要用于密集信息页。",
+        prompt: "参考 React Bits 的 LiquidChrome，生成一个液态金属主视觉，保持可读文本区域干净，动画速度慢且可关闭。",
+        demo: `<div class="rb-liquid-chrome-demo"><div class="rb-chrome-blob"></div></div>`
+      },
+      {
+        id: "rb-hyperspeed",
+        category: "reactbits",
+        skill: "React Bits / Backgrounds",
+        tags: ["react bits", "hyperspeed", "速度线", "tunnel", "背景"],
+        title: "Hyperspeed 速度隧道",
+        signature: "透视道路、光束和速度线向前推进，适合性能、速度、发布倒计时、电竞感页面。信息区要避免被线条抢走。",
+        prompt: "参考 React Bits 的 Hyperspeed，做一个透视速度隧道背景；把主内容放在稳定暗色遮罩上，避免文字漂在光束里。",
+        demo: `
+          <div class="rb-hyperspeed-demo">
+            <div class="rb-speed-road"></div>
+            ${Array.from({ length: 3 }, (_, i) => `<span class="rb-speed-beam" style="--i:${i}"></span>`).join("")}
+          </div>`
+      },
+      {
+        id: "rb-magnet",
+        category: "reactbits",
+        skill: "React Bits / Animations",
+        tags: ["react bits", "magnet", "hover", "磁吸", "按钮"],
+        title: "Magnet 磁吸悬停",
+        signature: "按钮或卡片被指针轻微吸过去，适合 CTA、图标按钮、工具栏。手感关键是跟随距离小、回弹慢。",
+        prompt: "参考 React Bits 的 Magnet，让按钮在鼠标靠近时轻微磁吸跟随，离开后平滑归位；触屏端保持普通点击。",
+        demo: `
+          <div class="rb-magnet-demo">
+            <div class="rb-magnet-field" data-rb-magnet>
+              <div class="rb-magnet-target">MAGNET</div>
+            </div>
+          </div>`
+      },
+      {
+        id: "rb-glare-hover",
+        category: "reactbits",
+        skill: "React Bits / Animations",
+        tags: ["react bits", "glarehover", "hover", "高光", "卡片"],
+        title: "GlareHover 斜切高光",
+        signature: "悬停时一束斜向高光扫过表面，适合会员卡、产品卡、图片卡。适合强调材质，不适合每个按钮都用。",
+        prompt: "参考 React Bits 的 GlareHover，为重点卡片加入斜向高光扫过；高光只在 hover 或进入视口时播放一次。",
+        demo: `
+          <div class="rb-glare-demo">
+            <div class="rb-glare-card"><strong>Premium</strong><span>hover sheen / glass pass</span></div>
+          </div>`
+      },
+      {
+        id: "rb-pixel-trail",
+        category: "reactbits",
+        skill: "React Bits / Animations",
+        tags: ["react bits", "pixeltrail", "cursor", "像素", "轨迹"],
+        title: "PixelTrail 像素轨迹",
+        signature: "指针经过后留下一串像素块，适合创意作品页、游戏化工具、年轻化活动页。注意不要遮挡正文。",
+        prompt: "参考 React Bits 的 PixelTrail，在演示区加入鼠标移动后的像素轨迹，设置数量上限和自动消失，reduced-motion 关闭。",
+        demo: `
+          <div class="rb-pixel-trail-demo">
+            <div class="rb-pixel-grid">${Array.from({ length: 48 }, (_, i) => `<span style="--i:${i}"></span>`).join("")}</div>
+          </div>`
+      },
+      {
+        id: "rb-magic-bento",
+        category: "reactbits",
+        skill: "React Bits / Components",
+        tags: ["react bits", "magicbento", "bento", "卡片", "spotlight"],
+        title: "MagicBento 聚光卡片墙",
+        signature: "Bento 卡片带局部聚光、粒子或微倾斜，适合功能矩阵、作品集、产品能力墙。比普通卡片墙更有空间感。",
+        prompt: "参考 React Bits 的 MagicBento，做一个 6 宫格能力墙；hover 时有聚光和轻微上浮，但卡片内容保持可读。",
+        demo: `
+          <div class="rb-bento-demo">
+            <div class="rb-bento-grid">${Array.from({ length: 6 }, (_, i) => `<div class="rb-bento-cell" style="--i:${i}"></div>`).join("")}</div>
+          </div>`
+      },
+      {
+        id: "rb-dock",
+        category: "reactbits",
+        skill: "React Bits / Components",
+        tags: ["react bits", "dock", "导航", "工具栏", "hover"],
+        title: "Dock 放大工具栏",
+        signature: "底部或侧边工具栏的图标按距离放大，像 macOS Dock。适合创意工具、编辑器、轻量导航。",
+        prompt: "参考 React Bits 的 Dock，做一个图标工具栏：鼠标靠近时图标按距离放大，移动端退化为等宽按钮。",
+        demo: `
+          <div class="rb-dock-demo">
+            <div class="rb-dock">${["H", "T", "M", "S", "P"].map((label, i) => `<span style="--i:${i}">${label}</span>`).join("")}</div>
+          </div>`
+      },
+      {
+        id: "rb-scroll-stack",
+        category: "reactbits",
+        skill: "React Bits / Components",
+        tags: ["react bits", "scrollstack", "stack", "滚动", "卡片堆"],
+        title: "ScrollStack 滚动卡片堆",
+        signature: "卡片随滚动层叠、压缩、换位，适合案例故事、步骤说明、课程章节。识别点是卡片像纸张一样堆叠推进。",
+        prompt: "参考 React Bits 的 ScrollStack，做一组滚动堆叠卡片；每张卡有固定高度、清晰标题，并在移动端保持一列。",
+        demo: `
+          <div class="rb-stack-demo">
+            <div class="rb-stack">
+              ${["Plan", "Build", "Motion", "Ship"].map((label, i) => `<div class="rb-stack-card" style="--i:${i}"><strong>${label}</strong><span>scroll layer ${i + 1}</span></div>`).join("")}
+            </div>
+          </div>`
+      },
+      {
         id: "style-switch",
         category: "style",
         skill: "beautiful-feishu-whiteboard",
@@ -2697,6 +3443,33 @@
       }
     ];
 
+    const reactBitsResources = [
+      {
+        group: "TextAnimations",
+        count: 23,
+        desc: "文字类：标题、数字、光泽、打字、解密、滚动浮现、变量字体响应。",
+        names: ["ASCIIText", "BlurText", "CircularText", "CountUp", "CurvedLoop", "DecryptedText", "FallingText", "FuzzyText", "GlitchText", "GradientText", "RotatingText", "ScrambledText", "ScrollFloat", "ScrollReveal", "ScrollVelocity", "ShinyText", "Shuffle", "SplitText", "TextCursor", "TextPressure", "TextType", "TrueFocus", "VariableProximity"]
+      },
+      {
+        group: "Animations",
+        count: 30,
+        desc: "交互动效类：光标、边框、电流、像素轨迹、磁吸、图片轨迹、金属漆、粒子和轨道。",
+        names: ["AnimatedContent", "Antigravity", "BlobCursor", "ClickSpark", "Crosshair", "Cubes", "ElectricBorder", "FadeContent", "GhostCursor", "GlareHover", "GradualBlur", "ImageTrail", "LaserFlow", "LogoLoop", "MagicRings", "Magnet", "MagnetLines", "MetaBalls", "MetallicPaint", "Noise", "OrbitImages", "PixelTrail", "PixelTransition", "Ribbons", "ShapeBlur", "SplashCursor", "StarBorder", "StickerPeel", "Strands", "TargetCursor"]
+      },
+      {
+        group: "Backgrounds",
+        count: 45,
+        desc: "背景类：极光、光束、网格、像素、流体、终端、雷达、丝绸、粒子、波纹和速度隧道。",
+        names: ["Aurora", "Balatro", "Ballpit", "Beams", "ColorBends", "DarkVeil", "Dither", "DotField", "DotGrid", "EvilEye", "FaultyTerminal", "Ferrofluid", "FloatingLines", "Galaxy", "GradientBlinds", "Grainient", "GridDistortion", "GridMotion", "GridScan", "Hyperspeed", "Iridescence", "LetterGlitch", "LightPillar", "LightRays", "Lightfall", "Lightning", "LineWaves", "LiquidChrome", "LiquidEther", "Orb", "Particles", "PixelBlast", "PixelSnow", "Plasma", "PlasmaWave", "Prism", "PrismaticBurst", "Radar", "RippleGrid", "ShapeGrid", "SideRays", "Silk", "SoftAurora", "Threads", "Waves"]
+      },
+      {
+        group: "Components",
+        count: 36,
+        desc: "组件类：Bento、Dock、导航、轮播、画廊、列表、计数器、卡片堆、玻璃表面和 3D 模型。",
+        names: ["AnimatedList", "BorderGlow", "BounceCards", "BubbleMenu", "CardNav", "CardSwap", "Carousel", "ChromaGrid", "CircularGallery", "Counter", "DecayCard", "Dock", "DomeGallery", "ElasticSlider", "FlowingMenu", "FluidGlass", "FlyingPosters", "Folder", "GlassIcons", "GlassSurface", "GooeyNav", "InfiniteMenu", "Lanyard", "MagicBento", "Masonry", "ModelViewer", "PillNav", "PixelCard", "ProfileCard", "ReflectiveCard", "ScrollStack", "SpotlightCard", "Stack", "StaggeredMenu", "Stepper", "TiltedCard"]
+      }
+    ];
+
     const palettes = [
       ["Apricot Arc", "Medium", "warm, retro, geometric", ["#F7C77D", "#E65F3C", "#283845", "#F6EBD8", "#7FB069"]],
       ["Avocado Press", "Medium", "bold duotone, editorial", ["#D4E157", "#27391C", "#F8F3D4", "#111111", "#F05D23"]],
@@ -2728,6 +3501,7 @@
     const atlasGrid = document.getElementById("atlasGrid");
     const paletteWall = document.getElementById("paletteWall");
     const visualSkillWall = document.getElementById("visualSkillWall");
+    const reactBitsWall = document.getElementById("reactBitsWall");
     const searchInput = document.getElementById("searchInput");
     const toast = document.getElementById("toast");
     const emptyState = document.getElementById("emptyState");
@@ -2851,7 +3625,7 @@
 
     function initLiquidGlassSurfaces() {
       document.querySelectorAll(".liquid-filter-root").forEach(node => node.remove());
-      const surfaces = document.querySelectorAll(".motion-card, .control-panel, .filter-btn, .quick-card, .palette-card, .skill-style-card, .filter-status, .replay-all, .edit-dock");
+      const surfaces = document.querySelectorAll(".motion-card, .control-panel, .filter-btn, .quick-card, .palette-card, .react-bits-card, .skill-style-card, .filter-status, .replay-all, .edit-dock");
       surfaces.forEach((element, index) => installLiquidFilter(element, index));
       surfaces.forEach(element => {
         element.addEventListener("pointermove", event => {
@@ -2913,6 +3687,20 @@
       `).join("");
     }
 
+    function renderReactBitsResources() {
+      reactBitsWall.innerHTML = reactBitsResources.map(group => `
+        <article class="react-bits-card">
+          <div class="react-bits-name"><span>${group.group}</span><span class="palette-formality">${group.count}</span></div>
+          <p class="react-bits-source">${group.desc}</p>
+          <div class="react-bits-list">${group.names.map(name => `<span>${name}</span>`).join("")}</div>
+          <div class="prompt-box" style="margin-top:12px">
+            <p class="prompt-copy">从 React Bits 的 ${group.group} 里选一个组件作为参考，生成同等气质的单文件 HTML 预览，并保留可复制提示词。</p>
+            <button class="copy-btn" type="button" data-copy="从 React Bits 的 ${group.group} 里选一个组件作为参考，生成同等气质的单文件 HTML 预览，并保留可复制提示词。">复制</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
     function renderPalettes() {
       paletteWall.innerHTML = palettes.map(([name, formality, vibe, colors]) => `
         <article class="palette-card">
@@ -2937,6 +3725,7 @@
         el.textContent = counts[el.dataset.count] || 0;
       });
       document.getElementById("demoTotal").textContent = atlasItems.length;
+      document.getElementById("reactBitsTotal").textContent = reactBitsResources.reduce((sum, group) => sum + group.count, 0);
     }
 
     function getFilterLabel(filter) {
@@ -3204,6 +3993,25 @@
       });
     }
 
+    function initReactBitsDemos() {
+      document.querySelectorAll("[data-rb-magnet]").forEach(field => {
+        const target = field.querySelector(".rb-magnet-target");
+        field.addEventListener("pointermove", event => {
+          const rect = field.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const x = (event.clientX - centerX) * 0.18;
+          const y = (event.clientY - centerY) * 0.18;
+          target.style.setProperty("--mx", `${x.toFixed(1)}px`);
+          target.style.setProperty("--my", `${y.toFixed(1)}px`);
+        });
+        field.addEventListener("pointerleave", () => {
+          target.style.setProperty("--mx", "0px");
+          target.style.setProperty("--my", "0px");
+        });
+      });
+    }
+
     function keyForElement(el) {
       return `${storagePrefix}${el.dataset.editId}`;
     }
@@ -3369,6 +4177,7 @@
     function boot() {
       renderAtlas();
       renderVisualSkills();
+      renderReactBitsResources();
       renderPalettes();
       initCounts();
       initLiquidGlassSurfaces();
@@ -3379,6 +4188,7 @@
       initDragDemos();
       initObserverDemos();
       initStyleSwitch();
+      initReactBitsDemos();
       loadEditableState();
       initImageSlots();
       initEditing();
