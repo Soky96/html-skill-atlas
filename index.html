@@ -2213,21 +2213,54 @@
     }
 
     /* Demo: React Bits liquid chrome */
+    .rb-liquid-chrome-demo {
+      background:
+        radial-gradient(ellipse at 62% 20%, rgba(142, 220, 232, 0.22), transparent 36%),
+        radial-gradient(ellipse at 18% 78%, rgba(234, 164, 186, 0.16), transparent 30%),
+        linear-gradient(150deg, #071626, #10243a 58%, #06111d);
+    }
+
     .rb-chrome-blob {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 190px;
-      height: 190px;
-      border-radius: 42% 58% 52% 48%;
+      width: min(78%, 340px);
+      height: 92px;
+      overflow: hidden;
+      border-radius: 999px 46px 999px 46px;
       background:
-        radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.96), transparent 16%),
-        conic-gradient(from 90deg, #f8faf2, #8edce8, #304c89, #eaa4ba, #f8faf2);
+        linear-gradient(110deg, rgba(255, 255, 255, 0.96) 0 12%, rgba(142, 220, 232, 0.9) 22%, rgba(48, 76, 137, 0.96) 40%, rgba(255, 255, 255, 0.86) 54%, rgba(234, 164, 186, 0.76) 70%, rgba(248, 250, 242, 0.96) 100%);
       box-shadow:
-        inset 16px 18px 32px rgba(255, 255, 255, 0.56),
-        inset -20px -24px 34px rgba(5, 18, 31, 0.36),
-        0 28px 64px rgba(126, 195, 243, 0.28);
-      transform: translate(-50%, -50%);
+        inset 18px 18px 30px rgba(255, 255, 255, 0.5),
+        inset -24px -20px 34px rgba(5, 18, 31, 0.42),
+        0 28px 64px rgba(126, 195, 243, 0.28),
+        0 0 0 1px rgba(255, 255, 255, 0.22);
+      transform: translate(-50%, -50%) rotate(-12deg) skewX(-8deg);
+    }
+
+    .rb-chrome-blob::before {
+      content: "";
+      position: absolute;
+      left: 22px;
+      right: 28px;
+      top: 13px;
+      height: 18px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.72));
+      opacity: 0.9;
+    }
+
+    .rb-chrome-blob::after {
+      content: "";
+      position: absolute;
+      right: -24px;
+      top: 50%;
+      width: 130px;
+      height: 58px;
+      border-radius: 999px;
+      background: radial-gradient(ellipse at 32% 48%, rgba(255, 255, 255, 0.84), rgba(142, 220, 232, 0.26) 42%, transparent 74%);
+      transform: translateY(-50%) rotate(4deg);
+      opacity: 0.78;
     }
 
     .demo-stage.is-running .rb-chrome-blob {
@@ -2235,8 +2268,8 @@
     }
 
     @keyframes rb-chrome {
-      0% { border-radius: 42% 58% 52% 48%; transform: translate(-50%, -50%) rotate(0deg) scale(0.94); }
-      100% { border-radius: 58% 42% 39% 61%; transform: translate(-50%, -50%) rotate(16deg) scale(1.08); }
+      0% { border-radius: 999px 46px 999px 46px; transform: translate(-50%, -50%) rotate(-13deg) skewX(-8deg) scale(0.96); }
+      100% { border-radius: 48px 999px 48px 999px; transform: translate(-50%, -50%) rotate(-7deg) skewX(-4deg) scale(1.04); }
     }
 
     /* Demo: React Bits hyperspeed */
